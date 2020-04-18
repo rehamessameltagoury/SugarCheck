@@ -56,3 +56,14 @@ def deskew(image):
         M = cv2.getRotationMatrix2D(center, angle, 1.0)
         rotated = cv2.warpAffine(image, M, (w, h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
     return rotated
+
+
+
+if __name__ == '__main__':
+            gray = get_grayscale(img)
+            thresh = thresholding(gray)
+            opening = opening(gray)
+            canny = canny(gray)
+            cv2.imshow('img', img)
+            cv2.waitKey(0)
+            
