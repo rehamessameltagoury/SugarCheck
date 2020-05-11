@@ -1,5 +1,5 @@
 package com.halodoc.orc
-
+//some imports before coding
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -23,9 +23,11 @@ import android.graphics.Bitmap
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+
+//main activity class
 class MainActivity : AppCompatActivity() {
 
-    private var imageFile: File? = null
+    private var imageFile: File? = null //the place which the captured image will be placed
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             EasyImage.openCameraForImage(this, 0)
         }
     }
-
+    // to access the camera and load an image to crop it and take a shot of the ingredients
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         EasyImage.handleActivityResult(requestCode, resultCode, data, this, object : DefaultCallback() {
@@ -54,15 +56,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
+    //from where the image saved , load it
     private fun loadImage(imageFile: File?) {
         Glide.with(this)
             .load(imageFile)
             .into(ivOCR)
     }
-
+    //inner class where algorithm is run here
     private inner class ConvertTask : AsyncTask<File, Void, String>() {
-        internal var tesseract = TessBaseAPI()
+        internal var tesseract = TessBaseAPI() //call an API of the tesseract algorithm "OCR"
+        //names of all types of the sugar and source of them
         val  sugarCane= listOf("Blackstrap molasses","Brown sugar","Cane juice",  "Cane sugar"
             , "Cane sugar extract","Caster sugar","Coffee crystals","Demerara sugar"," Golden syrup"
             ," Icing sugar"," Invert sugar","Molasses"," Panela","Rapadura","Raw sugar"
@@ -93,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             progressBar.visibility = View.VISIBLE
 
         }
-
+        //working on the image and extract the text in it , then make a check whether there is sugar or not.
         override fun doInBackground(vararg files: File): String {
             val options = BitmapFactory.Options()
             options.inSampleSize =
@@ -172,28 +175,12 @@ class MainActivity : AppCompatActivity() {
             }
             return ( final_result)
         }
-
+        // after capturing the image , display it and it's result on the text area
         override fun onPostExecute(result: String) {
             super.onPostExecute(result)
             tvResult.text = result
             tvResult.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
-        }
-        fun toGrayscale(bmpOriginal: Bitmap): Bitmap {
-            val width: Int
-            val height: Int
-            height = bmpOriginal.height
-            width = bmpOriginal.width
-
-            val bmpGrayscale = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-            val c = Canvas(bmpGrayscale)
-            val paint = Paint()
-            val cm = ColorMatrix()
-            cm.setSaturation(0f)
-            val f = ColorMatrixColorFilter(cm)
-            paint.setColorFilter(f)
-            //c.drawBitmap(bmpOriginal, 0.0, 0.0, paint)
-            return bmpGrayscale
         }
     }
 }
