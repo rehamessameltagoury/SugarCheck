@@ -1,73 +1,100 @@
+from PyQt5 import QtGui
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QFileDialog, QLabel, QTextEdit
 import sys
-from os import path
+
+from PyQt5.QtGui import QPixmap
 import re
 import cv2
 import numpy as np
 import os
 from difflib import SequenceMatcher
 from PIL import Image
-from PyQt5 import QtCore, QtWidgets, QtGui
-from PyQt5.QtGui import QIcon,QPixmap
-from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget,  QFileDialog, QTextEdit
-from PyQt5.QtGui import QPixmap
 import pytesseract
-pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
+pytesseract.pytesseract.tesseract_cmd = 'D:/Program Files/Tesseract-OCR/tesseract.exe'
 
-class App(QWidget):
 
+class Window(QWidget):
     def __init__(self):
         super().__init__()
-        self.title = 'SugarCheck Application'
-        self.left = 30
-        self.top = 40
-        self.width = 450
-        self.height = 450
-        self.initUI()
 
-    def initUI(self):
+        self.title = "Sugar Check"
+        self.top = 200
+        self.left = 500
+        self.width = 400
+        self.height = 300
+        self.imagePath = '1'
+        self.InitWindow()
+
+    def InitWindow(self):
+        self.setWindowIcon(QtGui.QIcon("icon.png"))
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
 
-        button = QPushButton('Choose an image', self)
-        button.setToolTip('This is an example button')
-        button.move(150, 100)
-        button.clicked.connect(self.on_click)
+        vbox = QVBoxLayout()
 
-        self.label = QLabel(self)
-        self.label.setText('Result:               ')
-        self.label.move(170,150)
+
+        self.btn1 = QPushButton("Open Image")
+        self.btn1.clicked.connect(self.getImage)
+        self.resize(400, 300)
+
+        vbox.addWidget(self.btn1)
+
+        self.label = QLabel(" ")
+        vbox.addWidget(self.label)
+        self.btn2 = QPushButton("Check Sugar!")
+        vbox.addWidget(self.btn2)
+        self.btn2.hide()
+        self.label2 = QLabel(" ")
+        vbox.addWidget(self.label2)
+
+        self.setLayout(vbox)
+
         self.show()
 
-    @pyqtSlot()
-    def on_click(self):
-        fname = QFileDialog.getOpenFileName(self, 'Open file','c:\\', "Image files (*.jpg *.gif)")
-        imagePath = fname[0]
-        if imagePath !="":
-            img = cv2.imread(imagePath)
-            gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 115, 1)
-            cv2.imwrite('new.png',thresh)
-            text = pytesseract.image_to_string(Image.open(os.path.abspath('new.png')))
-            text = re.sub('[*|\n|\|(|)|.]', ' ', text)
-            text = re.sub('[}|{|\|/|,|:]', ' ', text)
-            text = re.sub(' +', ' ', text)
-            ingredients = text.split()
-            sugars = ['glucose', 'fructose', 'dextrose']
-            ingredients = [x.lower() for x in ingredients]
-            weary_ingredients = 0
-            for i in range(len(sugars)):
-                for j in range(len(ingredients)):
+    def checkImage(self):
+        self.label2.show()
+        img = cv2.imread(self.imagePath)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 115, 1)
+        cv2.imwrite('new.png', thresh)
+        text = pytesseract.image_to_string(Image.open(os.path.abspath('new.png')))
+        text = re.sub('[*|\n|\|(|)|.]', ' ', text)
+        text = re.sub('[}|{|\|/|,|:]', ' ', text)
+        text = re.sub(' +', ' ', text)
+        ingredients = text.split()
+        sugars = ['glucose', 'fructose', 'dextrose', 'molasses', 'sucrose', 'lactose', 'maltose', 'syrup', 'lard', 'hydrogenated', 'sugar']
+        ingredients = [x.lower() for x in ingredients]
+        weary_ingredients = 0
+        for i in range(len(sugars)):
+            for j in range(len(ingredients)):
 
-                    if SequenceMatcher(None, sugars[i], ingredients[j]).ratio() >= 0.7:
-                        weary_ingredients = weary_ingredients + 1
+                if SequenceMatcher(None, sugars[i], ingredients[j]).ratio() >= 0.7:
+                    weary_ingredients = weary_ingredients + 1
 
-            if weary_ingredients > 0:
-                self.label.setText("NOT SAFE")
-            else:
-                self.label.setText("SAFE")
+        if weary_ingredients > 0:
+            self.label2.setText("NOT SAFE")
+        else:
+            self.label2.setText("SAFE")
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = App()
-    sys.exit(app.exec_())
+
+
+
+    def getImage(self):
+        self.label2.hide()
+        fname = QFileDialog.getOpenFileName(self, 'Open file',
+                                            'c:\\', "Image files (*.jpg *.png *.webp)")
+        if(fname != ('','')):
+            self.imagePath = fname[0]
+            pixmap = QPixmap(self.imagePath)
+            self.label.setPixmap(QPixmap(pixmap))
+            self.resize(pixmap.width(), pixmap.height())
+
+            self.btn2.show()
+            self.btn2.clicked.connect(self.checkImage)
+
+
+
+
+App = QApplication(sys.argv)
+window = Window()
+sys.exit(App.exec())
