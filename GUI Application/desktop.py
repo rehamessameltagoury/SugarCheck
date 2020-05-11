@@ -65,7 +65,6 @@ class App(QWidget):
             if weary_ingredients > 0:
                 self.label.setText("NOT SAFE")
             else:
-                print("SAFE")
                 self.label.setText("SAFE")
 
 if __name__ == '__main__':
