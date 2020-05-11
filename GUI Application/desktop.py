@@ -45,13 +45,14 @@ class App(QWidget):
         imagePath = fname[0]
         img = cv2.imread(imagePath)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        thresh =cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
-        text = pytesseract.image_to_string(Image.open(os.path.abspath(imagePath)))
+        thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 115, 1)
+        cv2.imwrite('new.png',thresh)
+        text = pytesseract.image_to_string(Image.open(os.path.abspath('new.png')))
         text = re.sub('[*|\n|\|(|)|.]', ' ', text)
         text = re.sub('[}|{|\|/|,|:]', ' ', text)
         text = re.sub(' +', ' ', text)
         ingredients = text.split()
-        sugars = ['glucose', 'fructose', 'dextrose']
+        sugars = ['sugar', 'glucose', 'fructose', 'dextrose', 'sucrose', 'syrup', 'hydrogenated', 'lard', 'molasses', 'maltose', 'lactose']
         ingredients = [x.lower() for x in ingredients]
         weary_ingredients = 0
         for i in range(len(sugars)):
@@ -71,18 +72,3 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = App()
     sys.exit(app.exec_())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
