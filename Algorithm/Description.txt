@@ -1,0 +1,1 @@
+/* Contains our trials and the steps we took to detect the ingredients in the photo and finally "Degreeofsafety.py" contains our complete algorithm. */
