@@ -5,12 +5,12 @@
 <ol>
 <li>Android application in kotlin -it also displays the type of sugar (fruits, chemical ...) if present-.</li>
 <li>GUI Application.</li>
-<li>Link to the demo (here)(https://youtu.be/avLiTyV3zz0)</li>
+<li>Link to the demo (here)[https://youtu.be/avLiTyV3zz0]</li>
 </ol>
 
 ## Android Java Application
 <p>We also developed another mobile application besides our main mobile application using Java and flask framework in python.
-Link to the application's demo (here)(https://l.facebook.com/l.php?u=https%3A%2F%2Fgithub.com%2Frehamessameltagoury%2FSugarCheck%2Ftree%2FMobile-Application%2FDEMO%3Ffbclid%3DIwAR0CceLmMi4eVIllshi__BG11vSsGF2bh6csmHInxZk8bwTOcdIFQzh1eQw&h=AT24IAbdbxHMMqV5-BRLhqVzjjHbN2ZSi7-QnRQIs6ofOIWnHyN2c7gw1-zJ2_zDgV-mpbETBYy6TnY84hOvhRVciPngyFuheFGJtcNFtWIqbZrTWmKKHKzAlEjxOkA7ppRcOw) </p>
+Link to the application's demo (here)[https://l.facebook.com/l.php?u=https%3A%2F%2Fgithub.com%2Frehamessameltagoury%2FSugarCheck%2Ftree%2FMobile-Application%2FDEMO%3Ffbclid%3DIwAR0CceLmMi4eVIllshi__BG11vSsGF2bh6csmHInxZk8bwTOcdIFQzh1eQw&h=AT24IAbdbxHMMqV5-BRLhqVzjjHbN2ZSi7-QnRQIs6ofOIWnHyN2c7gw1-zJ2_zDgV-mpbETBYy6TnY84hOvhRVciPngyFuheFGJtcNFtWIqbZrTWmKKHKzAlEjxOkA7ppRcOw] </p>
 
 ## Repository Contents
 <ol>
