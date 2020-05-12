@@ -7,6 +7,7 @@
 <li>GUI Application.</li>
 <li>Link to the demo https://youtu.be/avLiTyV3zz0</li>
 </ol>
+<strong>Note: This link is a higher quality version for the GUI part:</strong> https://drive.google.com/file/d/19l5xhFY572jexaekyfPQKU2AhzZp5bj3/view?fbclid=IwAR1L_mxkmkPsIFTng0gVz7rAifCGL12rzr-ATZ6CBPISIyNi3qHGS-F7DRo
 
 ## Android Java Application
 <p>We also developed another mobile application besides our main mobile application using Java and flask framework in python.
