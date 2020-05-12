@@ -15,7 +15,7 @@ Link to the application's demo: </p>
 # Repository Contents
 <ol>
 <li><strong>Algorithm:</strong> Contains the image processing algorithm development.</li>
-<li><strong>GUI Application:<strong> Contains the code of our GUI.</li>
+<li><strong>GUI Application:</strong> Contains the code of our GUI.</li>
 <li><strong>SugerCheck APP:</strong> Contains our main mobile application code.</li>
 <li><strong>Image.PNG:</strong> A test case sample we used.</li>
 </ol>
