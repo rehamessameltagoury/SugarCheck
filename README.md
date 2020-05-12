@@ -22,7 +22,7 @@ Link to the application's demo: </p>
 
 ## Team Members 
 <ol>
-<li>Ahmed Ashraf</li>
+<li>Ahmed Sherif</li>
 <li>Israa Sayed</li>
 <li>Mariam Khaled</li>
 <li>Mohammed Reda</li>
