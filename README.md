@@ -26,6 +26,6 @@ Link to the application's demo: </p>
 <li>Israa Sayed</li>
 <li>Mariam Khaled</li>
 <li>Mohammed Reda</li>
-<li>Reham Essameldin</li>
+<li>Reham Essam ElDin ElTagoury</li>
 </ol>
 
